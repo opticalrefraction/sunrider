@@ -37,6 +37,12 @@ const DEBUG_CHALLENGE = {
 
 const SKIP_INTRO = AFRAME.utils.getUrlParameter('skipintro') === 'true';
 
+// Blade pitch (X rotation) in degrees, relative to the controller's local axis.
+// Moon Rider assumes a Quest/Vive-style grip where the controller points forward,
+// so the blade is pitched 90 (135 on Oculus Touch's angled grip). Zapbox controllers
+// are held vertically and need ~0. Override with ?bladepitch=<degrees>.
+const BLADE_PITCH_OVERRIDE = AFRAME.utils.getUrlParameter('bladepitch');
+
 const colorScheme = localStorage.getItem('colorScheme') || 'default';
 
 let favorites = localStorage.getItem('favorites-v2');
@@ -86,6 +92,7 @@ AFRAME.registerState({
     colorSecondaryBright: COLORS.schemes[colorScheme].secondarybright,
     colorTertiary: COLORS.schemes[colorScheme].tertiary,
     controllerType: '',
+    bladePitch: BLADE_PITCH_OVERRIDE === '' ? 0 : parseFloat(BLADE_PITCH_OVERRIDE),
     damage: 0,
     difficultyFilter: 'All',
     difficultyFilterMenuOpen: false,
